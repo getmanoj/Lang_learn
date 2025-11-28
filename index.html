@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dutch Learning App</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <h1>Dutch Learning — Memorise</h1>
+      <div class="top-actions">
+        <label class="small">Translation: <input type="checkbox" id="toggleTranslation"></label>
+        <label class="small">Word bank: <input type="checkbox" id="toggleWordBank"></label>
+        <button id="btnTheme" class="theme-btn" title="Toggle theme">🌙</button>
+      </div>
+    </header>
+
+    <main class="main">
+      <aside class="sidebar">
+        <section class="panel small-panel">
+          <h4>Progress</h4>
+          <div id="progressSummary">No data yet.</div>
+          <button id="btnClearProgress">Clear Progress</button>
+        </section>
+      </aside>
+
+      <section class="content">
+        <nav class="tabs">
+          <button class="tab active" data-tab="sentences">Sentences</button>
+          <button class="tab" data-tab="flashcards">Flashcards</button>
+          <button class="tab" data-tab="memorise">Memorise</button>
+          <button class="tab" data-tab="manage">Manage</button>
+        </nav>
+
+        <div id="tabContent">
+          <div id="sentences" class="tabpane">
+            <h2>Fill-in-the-Blanks Session</h2>
+            <div class="session-controls">
+              <label>Sentences: <input type="number" id="sessionCount" min="1" max="50" value="10"></label>
+              <button id="btnStartSession">Start Session</button>
+              <button id="btnReviewMissed" disabled>Review Missed</button>
+            </div>
+            <div id="answersTable" class="panel small-panel" aria-live="polite">
+              <strong>All answers (shuffled)</strong>
+              <div id="answersList" style="margin-top:8px; display:flex; flex-wrap:wrap; gap:6px;"></div>
+            </div>
+            <div id="sessionArea"></div>
+            <div id="sessionFeedback"></div>
+          </div>
+
+          <div id="flashcards" class="tabpane hidden">
+            <h2>Flashcards</h2>
+            <div class="card-area">
+              <div id="cardFront" class="card">Front</div>
+              <div id="cardBack" class="card back hidden">Back</div>
+            </div>
+            <div class="card-controls">
+              <button id="btnPrevCard">Previous</button>
+              <button id="btnFlip">Flip</button>
+              <button id="btnNextCard">Next</button>
+              <button id="btnKnown">Known</button>
+              <button id="btnReview">Needs Review</button>
+              <button id="btnHint">Hint</button>
+            </div>
+            <div id="cardMeta"></div>
+          </div>
+
+          <div id="memorise" class="tabpane hidden">
+            <h2>Memorise (Fast Repetition)</h2>
+            <div class="modes">
+              <button class="mode active" data-mode="rapid">Rapid Reveal</button>
+              <button class="mode" data-mode="type">Type-to-Learn</button>
+              <button class="mode" data-mode="sprint">Timed Sprint</button>
+            </div>
+
+            <div id="modeArea">
+              <!-- Rapid -->
+              <div id="rapidArea">
+                <div id="rapidWord" class="bigword"></div>
+                <button id="btnReveal">Reveal</button>
+                <label>Auto-advance ms: <input id="rapidDelay" type="number" value="1000" min="200"></label>
+                <label><input type="checkbox" id="rapidLoop" checked> Loop</label>
+              </div>
+
+              <!-- Type -->
+              <div id="typeArea" class="hidden">
+                <div id="typeWord" class="bigword"></div>
+                <input id="typeInput" placeholder="Type English translation...">
+                <div id="typeFeedback"></div>
+              </div>
+
+              <!-- Sprint -->
+              <div id="sprintArea" class="hidden">
+                <div class="sprint-controls">
+                  <label>Sprint length:
+                    <select id="sprintLength"><option value="30">30s</option><option value="60">60s</option></select>
+                  </label>
+                  <button id="btnStartSprint">Start Sprint</button>
+                  <div id="sprintTimer">Ready</div>
+                  <div id="sprintScore"></div>
+                </div>
+                <div id="sprintWord" class="bigword"></div>
+              </div>
+            </div>
+
+            <div id="memoriseOptions" class="small"><label>Optionally sync memorise results to flashcards: <input type="checkbox" id="syncKnown"></label></div>
+          </div>
+
+          <div id="manage" class="tabpane hidden">
+            <h2>Manage Sentences (JSON)</h2>
+            <div class="panel">
+              <div class="json-actions">
+                <label for="importFile" class="sr-only">Import JSON file</label>
+                <input type="file" id="importFile" accept="application/json" aria-label="Import JSON file">
+                <button id="btnExport">Export JSON</button>
+                <button id="btnReset">Reset to sample</button>
+              </div>
+              <label for="jsonEditor" class="sr-only">Sentence JSON editor</label>
+              <textarea id="jsonEditor" spellcheck="false" aria-label="Sentence JSON editor" placeholder='[ { "sentence": "Ik eet een appel.", "test_words": ["appel"], "sentence_en": "I eat an apple.", "test_words_en": ["apple"], "difficulty": "easy" } ]'></textarea>
+              <div class="editor-actions">
+                <button id="btnSaveJson">Save</button>
+                <button id="btnPretty">Format</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">Built-in browser app • Data stored to your browser (localStorage). Import/export for backup.</footer>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
