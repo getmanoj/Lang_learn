@@ -6,8 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "test": "jest --runInBand",
-    "predeploy": "npm run build",
-  "deploy": "gh-pages -d build"
+  "deploy": "gh-pages -d public"
   },
   "keywords": [],
   "author": "",
